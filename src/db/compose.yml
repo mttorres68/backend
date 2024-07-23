@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'password'
+      MYSQL_ROOT_HOST: '%'
+    
+    ports:
+      - '3306:3306'
+    
+    expose:
+      - '3306'
+
+    volumes:
+      - dbdata:/var/lib/mysql
+    
+volumes:
+  dbdata:
