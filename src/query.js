@@ -74,9 +74,45 @@ const getOnu = async () => {
 };
 
 const snOnu = async (sn) => {
-  const snOnu = await con.query("SELECT * FROM onu WHERE sn LIKE ?", "%" + [sn] + "%");
+  const snOnu = await con.query(
+    "SELECT * FROM onu WHERE sn LIKE ?",
+    "%" + [sn] + "%"
+  );
 
   return snOnu[0];
 };
 
-export { addUser, verifyUser, getUserInfo, getOnu, snOnu };
+const createTable = async () => {
+  const createUserTable = `
+    CREATE TABLE IF NOT EXISTS user (
+      user_id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      email VARCHAR(255) NOT NULL UNIQUE,
+      password VARCHAR(255) NOT NULL
+    );`;
+
+  const createOnuTable = `
+    CREATE TABLE IF NOT EXISTS onu (
+      sn VARCHAR(20) PRIMARY KEY,
+      ont_id INT NOT NULL,
+      slot INT,
+      port INT,
+      state VARCHAR(20)
+    );
+  `;
+
+  try {
+    const queryUser = await con.query(createUserTable);
+    if (queryUser[0].warningStatus === 0) {
+      console.log("Tabela user criada com sucesso!");
+    }
+    const queryOnu = await con.query(createOnuTable);
+    if (queryOnu[0].warningStatus === 0) {
+      console.log("Tabela onu criada com sucesso!");
+    }
+  } catch (error) {
+    console.error("Erro ao criar tabelas: ", error);
+  }
+};
+
+export { addUser, verifyUser, getUserInfo, getOnu, snOnu, createTable };

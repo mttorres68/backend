@@ -1,7 +1,11 @@
 import { Router } from "express";
 import { verifyJWT } from "../middleware/verifyJWT.js";
 import { existsSync } from "node:fs";
-import { readFileTxtHuawei, readFileTxtZteState, readFileTxtZte,  } from "../utils/readFileTxtOnus.js";
+import {
+  readFileTxtHuawei,
+  readFileTxtZteState,
+  readFileTxtZte,
+} from "../utils/readFileTxtOnus.js";
 import { mergeJsonZte } from "../utils/mergeJson.js";
 
 const router = Router();
@@ -12,11 +16,6 @@ const readFileOnus = router.get("/read", verifyJWT, async (req, res) => {
     fileZteState: "src/inputs/OntInfo - ZTE - SNs - State.txt",
     fileZte: "src/inputs/OntInfo - ZTE - SNs.txt",
   };
-  const outputZTE = [
-    "src/utils/outputZTE/ONUs-zte-state.json",
-    "src/utils/outputZTE/ONUs-zte.json",
-  ];
-
 
   try {
     if (
@@ -25,9 +24,8 @@ const readFileOnus = router.get("/read", verifyJWT, async (req, res) => {
       existsSync(path.fileZte)
     ) {
       readFileTxtHuawei(path.fileHuawei);
-      readFileTxtZteState(path.fileZteState)
-      readFileTxtZte(path.fileZte)
-      mergeJsonZte(outputZTE)
+      readFileTxtZteState(path.fileZteState);
+      readFileTxtZte(path.fileZte);
 
       res.status(200).json({ message: "Dados obtidos com sucesso!" });
     } else {
