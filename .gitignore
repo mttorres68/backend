@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 test.rest
 
+compose.yml
+src/db/compose.yml
