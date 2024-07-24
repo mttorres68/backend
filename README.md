@@ -1,5 +1,5 @@
 # backend
-* Consiste na leitura de arquivos, providos da saida de uma OLT. Com informações sobre as ONUs.
+* Consiste na leitura de arquivos, providos da saída de uma OLT. Com informações sobre as ONUs.
 
 
 # Tecnologias Utilizadas
